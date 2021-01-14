@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/Certification%20Level-Community-28A745?link=https://github.com/cyberark/community/blob/master/Conjur/conventions/certification-levels.md) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# BlobHunte
+# BlobHunter
 
 a tool for scanning Azure blob storage accounts for publicly opened blobs.
 BlobHunter is a part of  "Hunting Blobs For Fun And Glory" research: {TODO: add here link to blog-post.}
