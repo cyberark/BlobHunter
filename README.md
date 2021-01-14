@@ -3,7 +3,7 @@
 # BlobHunter
 
 a tool for scanning Azure blob storage accounts for publicly opened blobs.  
-BlobHunter is a part of  "Hunting Blobs For Fun And Glory" research: {TODO: add here link to blog-post.}  
+BlobHunter is a part of  "Hunting Blobs For Fun And Glory" research: {TODO: add here link to blog-post.}
 
 ## Overview
 
