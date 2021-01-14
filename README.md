@@ -43,11 +43,11 @@ BlobHunter produces an informative csv result file with important details on eac
 
 #### Example for installation on Ubuntu:
 
-```bash
+```
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 ```
 
-```bash
+```
 pip3 install -r requirements.txt
 ```
 
@@ -55,7 +55,7 @@ pip3 install -r requirements.txt
 
 Simply run 
 
-```python
+```
 python3 BlobHunter.py
 ```
 
