@@ -20,7 +20,7 @@ BlobHunter produces an informative csv result file with important details on eac
 
 3. [`requirements.txt`](requirements.txt) packages
 
-4. Azure account with one of the following General/Storage built-in roles:
+4. Azure account with one of the following General/Storage [built-in](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles) roles:
 
    -	[Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#contributor)
    -	[Owner](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#owner)
