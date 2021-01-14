@@ -1,59 +1,83 @@
-# {Your project name}
-TODO: Insert brief description of your project
+![](https://img.shields.io/badge/Certification%20Level-Community-28A745?link=https://github.com/cyberark/community/blob/master/Conjur/conventions/certification-levels.md) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+# BlobHunter
+
+a tool for scanning Azure blob storage accounts for publicly opened blobs.
+BlobHunter is a part of  "Hunting Blobs For Fun And Glory" research: {TODO: add here link to blog-post.}
+
+## Overview
+
+BlobHunter helps you identify Azure blob storage stored files that are publicly opened to everyone over the internet.
+It can help you check for poorly configured containers storing sensitive data.
+This can be helpful on large subscriptions where there are lots of storage accounts that can be hard to track.
+BlobHunter produces an informative csv result file with important details on each publicly opened container in the tested environment.
+
+## Requirements
+
+1. Python 3+
+
+2. Azure CLI
+
+3. [`requirments.txt`](requirments.txt) packages
+
+4. Azure account with one of the following General/Storage built-in roles:
+
+   -	[Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#contributor)
+   -	[Owner](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#owner)
+-	[Avere Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#avere-contributor)
+   
+   -	[Classic Storage Account Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#classic-storage-account-contributor)
+-	[Storage Account Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#storage-account-contributor)
+   
+   Or any user that is allowed to perform the next Azure actions:
+   
+   ```
+   Microsoft.Resources/subscriptions/read
+   Microsoft.Resources/subscriptions/resourceGroups/read
+   Microsoft.Storage/storageAccounts/read
+   Microsoft.ClassicStorage/storageAccounts/listkeys/action
+   Microsoft.Storage/storageAccounts/blobServices/containers/read
+   Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read
+   ```
+
+## Build
+
+#### Example for installation on Ubuntu:
+
+```bash
+curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+```
+
+```bash
+pip3 install -r requirements.txt
+```
+
+## Usage 
+
+Simply run 
+
+```python
+python3 BlobHunter.py
+```
+
+If you are not logged in in the Azure CLI, a browser window will show up for you to insert your Azure account credentials.
+
+#### Demo
+
+TODO: add here the demo video :)
+
+## References
+
+For any question, please contact Daniel Niv (@DanielNiv) and CyberArk Labs.
 
 ## Certification level
-TODO: Select the appropriate certification level section below, and remove all others.
-
-{Community}
-![](https://img.shields.io/badge/Certification%20Level-Community-28A745?link=https://github.com/cyberark/community/blob/master/Conjur/conventions/certification-levels.md)
 
 This repo is a **Community** level project. It's a community contributed project that **is not reviewed or supported
 by CyberArk**. For more detailed information on our certification levels, see [our community guidelines](https://github.com/cyberark/community/blob/master/Conjur/conventions/certification-levels.md#community).
 
-{Trusted}
-![](https://img.shields.io/badge/Certification%20Level-Trusted-007BFF?link=https://github.com/cyberark/community/blob/master/Conjur/conventions/certification-levels.md)
-
-This repo is a **Trusted** level project. It's been reviewed by CyberArk to verify that it will securely
-work with Conjur OSS as documented. For more detailed  information on our certification levels, see
-[our community guidelines](https://github.com/cyberark/community/blob/master/Conjur/conventions/certification-levels.md#community).
-
-{Certified}
-![](https://img.shields.io/badge/Certification%20Level-Certified-6C757D?link=https://github.com/cyberark/community/blob/master/Conjur/conventions/certification-levels.md)
-
-This repo is a **Certified** level project. It's been reviewed by CyberArk to verify that it will securely
-work with CyberArk DAP as documented. In addition, CyberArk offers Enterprise-level support for these features. For
-more detailed  information on our certification levels, see [our community guidelines](https://github.com/cyberark/community/blob/master/Conjur/conventions/certification-levels.md#community).
-
-## Requirements
-
-TODO: Add any requirements that apply to your project here. Which Conjur / DAP versions is it
-compatible with? Does it integrate with other tools / projects - and if so, what versions of those
-does it require?
-
-## Usage instructions
-
-TODO: add details for how to use your project. Examples can be quite nice here. You should have
-a high level overview of the benefit of your project and its main use cases.
-
-## Contributing
-
-We welcome contributions of all kinds to this repository. For instructions on how to get started and descriptions
-of our development workflows, please see our [contributing guide](CONTRIBUTING.md).
-
 ## License
 
-Copyright (c) 2020 CyberArk Software Ltd. All rights reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
+Copyright (c) 2021 CyberArk Software Ltd.
+Licensed under the MIT License. 
 For the full license text see [`LICENSE`](LICENSE).
+
