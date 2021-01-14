@@ -67,7 +67,7 @@ TODO: add here the demo video :)
 
 ## References
 
-For any question, please contact Daniel Niv ['@DanielNiv'](DanielNiv) and CyberArk Labs.
+For any question, please contact Daniel Niv [DanielNiv](https://github.com/DanielNiv) and CyberArk Labs.
 
 ## Certification level
 
