@@ -18,7 +18,7 @@ BlobHunter produces an informative csv result file with important details on eac
 
 2. Azure CLI
 
-3. [`requirments.txt`](requirments.txt) packages
+3. [`requirements.txt`](requirements.txt) packages
 
 4. Azure account with one of the following General/Storage built-in roles:
 
