@@ -24,12 +24,11 @@ BlobHunter produces an informative csv result file with important details on eac
 
    -	[Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#contributor)
    -	[Owner](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#owner)
--	[Avere Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#avere-contributor)
-   
+   -	[Avere Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#avere-contributor)
    -	[Classic Storage Account Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#classic-storage-account-contributor)
--	[Storage Account Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#storage-account-contributor)
+   -	[Storage Account Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#storage-account-contributor)
    
-   Or any user that is allowed to perform the next Azure actions:
+   Or any user with a role that is allowed to perform the next Azure actions:
    
    ```
    Microsoft.Resources/subscriptions/read
