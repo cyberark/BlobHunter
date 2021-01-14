@@ -7,9 +7,9 @@ BlobHunter is a part of  "Hunting Blobs For Fun And Glory" research: {TODO: add 
 
 ## Overview
 
-BlobHunter helps you identify Azure blob storage stored files that are publicly opened to everyone over the internet.
-It can help you check for poorly configured containers storing sensitive data.
-This can be helpful on large subscriptions where there are lots of storage accounts that can be hard to track.
+BlobHunter helps you identify Azure blob storage stored files that are publicly opened to everyone over the internet.  
+It can help you check for poorly configured containers storing sensitive data.  
+This can be helpful on large subscriptions where there are lots of storage accounts that can be hard to track.  
 BlobHunter produces an informative csv result file with important details on each publicly opened container in the tested environment.
 
 ## Requirements
@@ -72,12 +72,12 @@ For any question, please contact Daniel Niv (@DanielNiv) and CyberArk Labs.
 
 ## Certification level
 
-This repo is a **Community** level project. It's a community contributed project that **is not reviewed or supported
+This repo is a **Community** level project. It's a community contributed project that **is not reviewed or supported  
 by CyberArk**. For more detailed information on our certification levels, see [our community guidelines](https://github.com/cyberark/community/blob/master/Conjur/conventions/certification-levels.md#community).
 
 ## License
 
-Copyright (c) 2021 CyberArk Software Ltd.
-Licensed under the MIT License. 
+Copyright (c) 2021 CyberArk Software Ltd.  
+Licensed under the MIT License.  
 For the full license text see [`LICENSE`](LICENSE).
 
