@@ -33,7 +33,7 @@ BlobHunter produces an informative csv result file with important details on eac
    Microsoft.Resources/subscriptions/read
    Microsoft.Resources/subscriptions/resourceGroups/read
    Microsoft.Storage/storageAccounts/read
-   Microsoft.ClassicStorage/storageAccounts/listkeys/action
+   Microsoft.Storage/storageAccounts/listkeys/action
    Microsoft.Storage/storageAccounts/blobServices/containers/read
    Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read
    ```
