@@ -2,15 +2,15 @@
 
 # BlobHunter
 
-a tool for scanning Azure blob storage accounts for publicly opened blobs.  
+A tool for scanning Azure blob storage accounts for publicly opened blobs.  
 BlobHunter is a part of  "Hunting Blobs For Fun And Glory" research: {TODO: add here link to blog-post.}
 
 ## Overview
 
-BlobHunter helps you identify Azure blob storage stored files that are publicly opened to everyone over the internet.  
+BlobHunter helps you identify Azure blob storage containers which stored files that are publicly opened to everyone over the internet.  
 It can help you check for poorly configured containers storing sensitive data.  
-This can be helpful on large subscriptions where there are lots of storage accounts that can be hard to track.  
-BlobHunter produces an informative csv result file with important details on each publicly opened container in the tested environment.
+This can be helpful on large Azure subscriptions where there are lots of storage accounts that could be hard to track.  
+BlobHunter produces an informative csv result file with important details on each publicly opened container in the scanned environment.
 
 ## Requirements
 
@@ -20,14 +20,14 @@ BlobHunter produces an informative csv result file with important details on eac
 
 3. [`requirements.txt`](requirements.txt) packages
 
-4. Azure account with one of the following General/Storage [built-in roles](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles):
+4. Azure user with one of the following [built-in roles](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles):
 
    -	[Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#contributor)
    -	[Owner](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#owner)
    -	[Avere Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#avere-contributor)
    -	[Storage Account Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#storage-account-contributor)
    
-   Or any Azure account with a role that allows to perform the next Azure actions:
+   Or any Azure user with a role that allows to perform the following Azure actions:
    
    ```
    Microsoft.Resources/subscriptions/read
@@ -58,7 +58,7 @@ Simply run
 python3 BlobHunter.py
 ```
 
-If you are not logged in in the Azure CLI, a browser window will show up for you to insert your Azure account credentials.
+If you are not logged in in the Azure CLI, a browser window will be prompted at you for inserting your Azure user credentials.
 
 #### Demo
 
