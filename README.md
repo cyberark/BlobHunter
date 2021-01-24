@@ -66,12 +66,7 @@ TODO: add here the demo video :)
 
 ## References
 
-For any question, please contact [DanielNiv](https://github.com/DanielNiv) and CyberArk Labs.
-
-## Certification level
-
-This repo is a **Community** level project. It's a community contributed project that **is not reviewed or supported  
-by CyberArk**. For more detailed information on our certification levels, see [our community guidelines](https://github.com/cyberark/community/blob/master/Conjur/conventions/certification-levels.md#community).
+For any question or feedback, please contact [DanielNiv](https://github.com/DanielNiv), [Asaf Hecht](https://twitter.com/Hechtov) and CyberArk Labs.
 
 ## License
 
