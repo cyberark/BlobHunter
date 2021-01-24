@@ -75,7 +75,7 @@ by CyberArk**. For more detailed information on our certification levels, see [o
 
 ## License
 
-Copyright (c) 2021 CyberArk Software Ltd. All rights reserved. 
+Copyright (c) 2021 CyberArk Software Ltd. All rights reserved.  
 Licensed under the MIT License.  
 For the full license text see [`LICENSE`](LICENSE).
 
