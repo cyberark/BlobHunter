@@ -118,6 +118,8 @@ def check_subscription(tenant_id, tenant_name, sub_id, sub_name, creds):
 
     if len(output_list) > 0:
         print("\t\t[+] Found {} PUBLIC containers".format(len(output_list)), flush=True)
+    else:
+        print("\t\t[+] No PUBLIC containers found")
 
     header = ["Tenant ID", "Tenant Name", "Subscription ID", "Subscription Name", "Resource Group", "Storage Account", "Container",
               "Public Access Level", "URL", "Total Files"]
