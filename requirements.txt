@@ -1,7 +1,0 @@
-azure-common==1.1.26
-azure-core==1.10.0
-azure-identity==1.5.0
-azure-mgmt-core==1.2.2
-azure-mgmt-resource==15.0.0
-azure-mgmt-storage==16.0.0
-azure-storage-blob==12.6.0
