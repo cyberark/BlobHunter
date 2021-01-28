@@ -1,4 +1,5 @@
 import azure.core.exceptions
+from datetime import date
 from azure.identity import AzureCliCredential
 from azure.mgmt.resource import SubscriptionClient, ResourceManagementClient
 from azure.mgmt.storage import StorageManagementClient
@@ -128,12 +129,13 @@ def check_subscription(tenant_id, tenant_name, sub_id, sub_name, creds):
         header.append(ext)
 
     header.append("others")
-    write_csv('public-containers.csv', header, output_list)
+    write_csv('public-containers-{}.csv'.format(date.today()), header, output_list)
 
 
-def delete_csv(file_name):
-    if os.path.isfile(file_name):
-        os.remove(file_name)
+def delete_csv():
+    for file in os.listdir("."):
+        if os.path.isfile(file) and file.startswith("public"):
+            os.remove(file)
 
 
 def write_csv(file_name, header, rows):
@@ -200,7 +202,7 @@ def print_logo():
 def main():
     print_logo()
     credentials = get_credentials()
-    delete_csv("public-containers.csv")
+    delete_csv()
 
     if credentials is None:
         print("[-] Unable to login to a valid Azure user", flush=True)
@@ -213,7 +215,7 @@ def main():
         check_subscription(tenants_ids[i], tenants_names[i], subs_ids[i], subs_names[i], credentials)
 
     print("\n[+] Scanned all subscriptions successfully", flush=True)
-    print("[+] Check out public-containers.csv file for a fully detailed report", flush=True)
+    print("[+] Check out public-containers-{}.csv file for a fully detailed report".format(date.today()), flush=True)
 
 
 if __name__ == '__main__':
