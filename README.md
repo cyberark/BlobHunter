@@ -14,7 +14,7 @@ BlobHunter produces an informative csv result file with important details on eac
 
 ## Requirements
 
-1. Python 3+
+1. Python 3.5+
 
 2. Azure CLI
 
