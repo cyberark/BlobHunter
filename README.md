@@ -60,8 +60,7 @@ python3 BlobHunter.py
 If you are not logged in in the Azure CLI, a browser window will be prompted at you for inserting your Azure user credentials.
 
 #### Demo
-
-TODO: add here the demo video :)
+![BlobHunter](https://github.com/cyberark/BlobHunter/blob/assets/BlobHunterDemo.gif)
 
 ## References
 
