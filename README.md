@@ -1,9 +1,11 @@
-![](https://img.shields.io/badge/Certification%20Level-Community-28A745?link=https://github.com/cyberark/community/blob/master/Conjur/conventions/certification-levels.md) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # BlobHunter
 
 A tool for scanning Azure blob storage accounts for publicly opened blobs.  
-BlobHunter is a part of  "Hunting Blobs For Fun And Glory" research: {TODO: add here link to blog-post.}
+BlobHunter is a part of  "Hunting Blobs For Fun And Glory" research:
+
+[//]: # {TODO: add here link to blog-post.}
 
 ## Overview
 
@@ -25,9 +27,9 @@ BlobHunter produces an informative csv result file with important details on eac
    -	[Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#contributor)
    -	[Owner](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#owner)  
    -	[Storage Account Contributor](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#storage-account-contributor)
-   
+
    Or any Azure user with a role that allows to perform the following Azure actions:
-   
+
    ```
    Microsoft.Resources/subscriptions/read
    Microsoft.Resources/subscriptions/resourceGroups/read
@@ -49,9 +51,9 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 pip3 install -r requirements.txt
 ```
 
-## Usage 
+## Usage
 
-Simply run 
+Simply run
 
 ```
 python3 BlobHunter.py
@@ -66,9 +68,10 @@ If you are not logged in in the Azure CLI, a browser window will be prompted at 
 
 For any question or feedback, please contact [DanielNiv](https://github.com/DanielNiv), [Asaf Hecht](https://twitter.com/Hechtov) and CyberArk Labs.
 
+This project is not accepting contributions at this time.
+
 ## License
 
 Copyright (c) 2021 CyberArk Software Ltd. All rights reserved.  
 Licensed under the MIT License.  
 For the full license text see [`LICENSE`](LICENSE).
-
