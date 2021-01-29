@@ -67,7 +67,6 @@ If you are not logged in in the Azure CLI, a browser window will be prompted at 
 ## References
 
 For any question or feedback, please contact [DanielNiv](https://github.com/DanielNiv), [Asaf Hecht](https://twitter.com/Hechtov) and CyberArk Labs.
-
 This project is not accepting contributions at this time.
 
 ## License
