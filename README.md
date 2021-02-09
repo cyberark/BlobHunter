@@ -4,8 +4,8 @@
 
 A tool for scanning Azure blob storage accounts for publicly opened blobs.  
 BlobHunter is a part of  "Hunting Azure Blobs Exposes Millions of Sensitive Files" research:  
-[Blog post link](https://www.cyberark.com/resources/threat-research-blog/hunting-azure-blobs-exposes-millions-of-sensitive-files)
-
+https://www.cyberark.com/resources/threat-research-blog/hunting-azure-blobs-exposes-millions-of-sensitive-files  
+  
 ## Overview
 
 BlobHunter helps you identify Azure blob storage containers which stored files that are publicly opened to everyone over the internet.  
