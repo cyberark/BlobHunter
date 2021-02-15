@@ -8,7 +8,7 @@ https://www.cyberark.com/resources/threat-research-blog/hunting-azure-blobs-expo
   
 ## Overview
 
-BlobHunter helps you identify Azure blob storage containers which stored files that are publicly opened to everyone over the internet.  
+BlobHunter helps you identify Azure blob storage containers which store files that are publicly opened to everyone over the internet.  
 It can help you check for poorly configured containers storing sensitive data.  
 This can be helpful on large Azure subscriptions where there are lots of storage accounts that could be hard to track.  
 BlobHunter produces an informative csv result file with important details on each publicly opened container in the scanned environment.
@@ -65,7 +65,7 @@ If you are not logged in in the Azure CLI, a browser window will be prompted at 
 
 ## References
 
-For any question or feedback, please contact [DanielNiv](https://github.com/DanielNiv), [Asaf Hecht](https://twitter.com/Hechtov) and CyberArk Labs.
+For any question or feedback, please contact [Daniel Niv](https://github.com/DanielNiv), [Asaf Hecht](https://twitter.com/Hechtov) and CyberArk Labs.
 This project is not accepting contributions at this time.
 
 ## License
