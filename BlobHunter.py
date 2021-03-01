@@ -53,9 +53,12 @@ def check_storage_account(account_name, key):
     containers = blob_service_client.list_containers(timeout=15)
 
     public_containers = list()
-    for cont in containers:
-        if cont.public_access is not None:
-            public_containers.append(cont)
+    try:
+        for cont in containers:
+            if cont.public_access is not None:
+                public_containers.append(cont)
+    except azure.core.exceptions.HttpResponseError:
+        print("\t\t[-] Could not scan account {}, skipping".format(account_name), flush=True)
 
     return public_containers
 
