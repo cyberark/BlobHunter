@@ -35,9 +35,10 @@ def get_tenants_and_subscriptions(creds):
     subscription_names = list()
 
     for sub in subscription_client.subscriptions.list():
-        tenants_ids.append(sub.tenant_id)
-        subscriptions_ids.append(sub.id[15:])
-        subscription_names.append(sub.display_name)
+        if sub.state == 'Enabled':
+            tenants_ids.append(sub.tenant_id)
+            subscriptions_ids.append(sub.id[15:])
+            subscription_names.append(sub.display_name)
 
     # Getting tenant name from given tenant id
     for ten_id in tenants_ids:
