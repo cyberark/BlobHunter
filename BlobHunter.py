@@ -35,9 +35,10 @@ def get_tenants_and_subscriptions(creds):
     subscription_names = list()
 
     for sub in subscription_client.subscriptions.list():
-        tenants_ids.append(sub.tenant_id)
-        subscriptions_ids.append(sub.id[15:])
-        subscription_names.append(sub.display_name)
+        if sub.state == 'Enabled':
+            tenants_ids.append(sub.tenant_id)
+            subscriptions_ids.append(sub.id[15:])
+            subscription_names.append(sub.display_name)
 
     # Getting tenant name from given tenant id
     for ten_id in tenants_ids:
@@ -53,9 +54,12 @@ def check_storage_account(account_name, key):
     containers = blob_service_client.list_containers(timeout=15)
 
     public_containers = list()
-    for cont in containers:
-        if cont.public_access is not None:
-            public_containers.append(cont)
+    try:
+        for cont in containers:
+            if cont.public_access is not None:
+                public_containers.append(cont)
+    except azure.core.exceptions.HttpResponseError:
+        print("\t\t[-] Could not scan account {}, skipping".format(account_name), flush=True)
 
     return public_containers
 
