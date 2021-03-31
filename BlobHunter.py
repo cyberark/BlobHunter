@@ -1,6 +1,6 @@
 import azure.core.exceptions
 from datetime import date
-from azure.identity import AzureCliCredential
+from azure.identity import DefaultAzureCredential
 from azure.mgmt.resource import SubscriptionClient, ResourceManagementClient
 from azure.mgmt.storage import StorageManagementClient
 from azure.storage.blob import BlobServiceClient, ContainerClient
@@ -12,19 +12,6 @@ ENDPOINT_URL = '{}.blob.core.windows.net'
 CONTAINER_URL = '{}.blob.core.windows.net/{}/'
 EXTENSIONS = ["txt", "csv", "pdf", "docx", "xlsx"]
 
-
-def get_credentials():
-    try:
-        username = subprocess.check_output("az account show --query user.name", shell=True,
-                                           stderr=subprocess.DEVNULL).decode("utf-8")
-
-    except subprocess.CalledProcessError:
-        subprocess.check_output("az login", shell=True, stderr=subprocess.DEVNULL)
-        username = subprocess.check_output("az account show --query user.name", shell=True,
-                                           stderr=subprocess.DEVNULL).decode("utf-8")
-
-    print("[+] Logged in as user {}".format(username.replace('"', '').replace("\n", '')), flush=True)
-    return AzureCliCredential()
 
 
 def get_tenants_and_subscriptions(creds):
@@ -201,7 +188,7 @@ def print_logo():
 
 def main():
     print_logo()
-    credentials = get_credentials()
+    credentials = DefaultAzureCredentials()
     delete_csv()
 
     if credentials is None:
