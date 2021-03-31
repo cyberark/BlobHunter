@@ -132,12 +132,6 @@ def check_subscription(tenant_id, tenant_name, sub_id, sub_name, creds):
     write_csv('public-containers-{}.csv'.format(date.today()), header, output_list)
 
 
-def delete_csv():
-    for file in os.listdir("."):
-        if os.path.isfile(file) and file.startswith("public"):
-            os.remove(file)
-
-
 def write_csv(file_name, header, rows):
     file_exists = os.path.isfile(file_name)
 
@@ -202,7 +196,6 @@ def print_logo():
 def main():
     print_logo()
     credentials = get_credentials()
-    delete_csv()
 
     if credentials is None:
         print("[-] Unable to login to a valid Azure user", flush=True)
