@@ -1,3 +1,6 @@
+import itertools
+import time
+import pyinputplus as pyip
 import azure.core.exceptions
 from datetime import date
 from azure.identity import AzureCliCredential
@@ -35,25 +38,73 @@ def get_tenants_and_subscriptions(creds):
     subscription_names = list()
 
     for sub in subscription_client.subscriptions.list():
-        tenants_ids.append(sub.tenant_id)
-        subscriptions_ids.append(sub.id[15:])
-        subscription_names.append(sub.display_name)
+        # https://docs.microsoft.com/en-us/python/api/azure-mgmt-subscription/azure.mgmt.subscription.models.subscription?view=azure-python
+        # tenants_ids.append(sub.tenant_id)
+        # subscriptions_ids.append(sub.id[15:])
+        # subscription_names.append(sub.display_name)
+         if sub.state == 'Enabled':
+            tenants_ids.append(sub.tenant_id)
+            subscriptions_ids.append(sub.id[15:])
+            subscription_names.append(sub.display_name)
 
     # Getting tenant name from given tenant id
     for ten_id in tenants_ids:
         for ten in subscription_client.tenants.list():
             if ten_id == ten.id[9:]:
-                tenants_names.append(ten.display_name)
+                tenants_names.append(ten.display_name) 
 
     return tenants_ids, tenants_names, subscriptions_ids, subscription_names
+
+def iterator_wrapper(iterator):
+    flag__httpresponse_code_429 = False
+    while True:
+        try:
+            iterator,iterator_copy = itertools.tee(iterator)
+            iterator_value = next(iterator)
+            yield (iterator_value,None)
+        except StopIteration as e_stop:
+            yield (None,e_stop)
+        except azure.core.exceptions.HttpResponseError as e_http:
+            if e_http.status_code == 429:
+               print("[!] Encouter throttling limits error, waiting 5 min in order to continute the scan")
+               time.sleep(300)
+               if flag__httpresponse_code_429:
+                   # Means this current itearble object got throttling limit 2 times in a row, this condition has been added in order to prevent infint loop of throttling limit.
+                   yield (None,e_http)
+               else:
+                   flag__httpresponse_code_429 = True
+                   iterator = iterator_copy
+                   time.sleep(300)
+                   continue
+            else:
+                yield (None,e_http)
+        except Exception as e:
+            yield (None,e)
+      
+    #     yield (None,e)
+    # except StopIteration as e:
+    #     yield (None,e)
+
 
 
 def check_storage_account(account_name, key):
     blob_service_client = BlobServiceClient(ENDPOINT_URL.format(account_name), credential=key)
     containers = blob_service_client.list_containers(timeout=15)
-
+    
     public_containers = list()
-    for cont in containers:
+    # test_public_containers = list()
+    # for cont in containers:
+    #     if cont.public_access is not None:
+    #         test_public_containers.append(cont)
+    # containers = blob_service_client.list_containers(timeout=15)
+
+    for cont,e in iterator_wrapper(containers):
+        if e :
+            if type(e) is not StopIteration:   
+                  print("\t\t[-] Could not scan the container of the the account{} due to the error{}. skipping".format(account_name,e), flush=True) 
+                  continue
+            else:
+                break
         if cont.public_access is not None:
             public_containers.append(cont)
 
@@ -76,7 +127,13 @@ def check_subscription(tenant_id, tenant_name, sub_id, sub_name, creds):
 
     accounts_counter = 0
     for group in resource_groups:
-        for item in storage_client.storage_accounts.list_by_resource_group(group):
+        for item,e in iterator_wrapper(storage_client.storage_accounts.list_by_resource_group(group)):
+            if e :
+                if type(e) is not StopIteration:   
+                    print("\t\t[-] Could not access one of the resources of the group {} ,due to the error {} skipping the resource".format(group,e), flush=True) 
+                    continue
+                else:
+                    break
             accounts_counter += 1
             group_to_names_dict[group][item.name] = ''
 
@@ -178,6 +235,18 @@ def count_files_extensions(files, extensions):
     counter_dict['other'] = others_cnt
     return counter_dict
 
+def choose_subscriptions(credentials):
+    tenants_ids, tenants_names, subs_ids, subs_names = get_tenants_and_subscriptions(credentials)
+    print("[+] Found {} subscriptions".format(len(subs_ids)), flush=True)
+    response = pyip.inputMenu(['N', 'Y'],"Enter Y for all subscriptions\nEnter N to choose for specific subscriptions\n")
+    if response == 'Y':
+        return tenants_ids, tenants_names, subs_ids, subs_names
+    else:
+        response_sub = pyip.inputMenu(subs_names,"Enter the specific subscriptions you wish to test\n")
+        subs_index = subs_names.index(response_sub)
+        return tenants_ids[subs_index], tenants_names[subs_index], subs_ids[subs_index], subs_names[subs_index]
+   
+
 
 def print_logo():
     logo = '''
@@ -208,11 +277,13 @@ def main():
         print("[-] Unable to login to a valid Azure user", flush=True)
         return
 
-    tenants_ids, tenants_names, subs_ids, subs_names = get_tenants_and_subscriptions(credentials)
-    print("[+] Found {} subscriptions".format(len(subs_ids)), flush=True)
+    tenants_ids, tenants_names, subs_ids, subs_names = choose_subscriptions(credentials)
 
-    for i in range(0, len(subs_ids)):
-        check_subscription(tenants_ids[i], tenants_names[i], subs_ids[i], subs_names[i], credentials)
+    if type(tenants_ids) == list:
+        for i in range(0, len(subs_ids)):
+            check_subscription(tenants_ids[i], tenants_names[i], subs_ids[i], subs_names[i], credentials)
+    else:
+        check_subscription(tenants_ids, tenants_names, subs_ids, subs_names, credentials)
 
     print("\n[+] Scanned all subscriptions successfully", flush=True)
     print("[+] Check out public-containers-{}.csv file for a fully detailed report".format(date.today()), flush=True)
