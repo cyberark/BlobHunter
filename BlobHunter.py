@@ -89,7 +89,7 @@ def check_storage_account(account_name, key):
     for cont,e in iterator_wrapper(containers):
         if e :
             if type(e) is not StopIteration:   
-                  print("\t\t[-] Could not scan the container of the the account{} due to the error{}. skipping".format(account_name,e), flush=True) 
+                  print("\t\t[-] Could not scan the container of the account{} due to the error{}. skipping".format(account_name,e), flush=True) 
                   continue
             else:
                 break
