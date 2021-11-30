@@ -39,9 +39,6 @@ def get_tenants_and_subscriptions(creds):
 
     for sub in subscription_client.subscriptions.list():
         # https://docs.microsoft.com/en-us/python/api/azure-mgmt-subscription/azure.mgmt.subscription.models.subscription?view=azure-python
-        # tenants_ids.append(sub.tenant_id)
-        # subscriptions_ids.append(sub.id[15:])
-        # subscription_names.append(sub.display_name)
          if sub.state == 'Enabled':
             tenants_ids.append(sub.tenant_id)
             subscriptions_ids.append(sub.id[15:])
@@ -81,22 +78,13 @@ def iterator_wrapper(iterator):
         except Exception as e:
             yield (None,e)
       
-    #     yield (None,e)
-    # except StopIteration as e:
-    #     yield (None,e)
 
 
 
 def check_storage_account(account_name, key):
     blob_service_client = BlobServiceClient(ENDPOINT_URL.format(account_name), credential=key)
     containers = blob_service_client.list_containers(timeout=15)
-    
     public_containers = list()
-    # test_public_containers = list()
-    # for cont in containers:
-    #     if cont.public_access is not None:
-    #         test_public_containers.append(cont)
-    # containers = blob_service_client.list_containers(timeout=15)
 
     for cont,e in iterator_wrapper(containers):
         if e :
@@ -238,7 +226,7 @@ def count_files_extensions(files, extensions):
 def choose_subscriptions(credentials):
     tenants_ids, tenants_names, subs_ids, subs_names = get_tenants_and_subscriptions(credentials)
     print("[+] Found {} subscriptions".format(len(subs_ids)), flush=True)
-    response = pyip.inputMenu(['N', 'Y'],"Enter Y for all subscriptions\nEnter N to choose for specific subscriptions\n")
+    response = pyip.inputMenu(['N', 'Y'],"Do you wish to run the script on all the subscriptions?\nEnter Y for all subscriptions\nEnter N to choose for specific subscriptions\n")
     if response == 'Y':
         return tenants_ids, tenants_names, subs_ids, subs_names
     else:
