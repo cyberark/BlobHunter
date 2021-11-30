@@ -5,3 +5,4 @@ azure-mgmt-core==1.2.2
 azure-mgmt-resource==15.0.0
 azure-mgmt-storage==16.0.0
 azure-storage-blob==12.6.0
+pyinputplus==0.2.12
