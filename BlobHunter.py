@@ -38,7 +38,6 @@ def get_tenants_and_subscriptions(creds):
     subscription_names = list()
 
     for sub in subscription_client.subscriptions.list():
-        # https://docs.microsoft.com/en-us/python/api/azure-mgmt-subscription/azure.mgmt.subscription.models.subscription?view=azure-python
          if sub.state == 'Enabled':
             tenants_ids.append(sub.tenant_id)
             subscriptions_ids.append(sub.id[15:])
