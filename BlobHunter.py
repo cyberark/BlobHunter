@@ -62,7 +62,7 @@ def iterator_wrapper(iterator):
             yield (None,e_stop)
         except azure.core.exceptions.HttpResponseError as e_http:
             if e_http.status_code == 429:
-               print("[!] Encouter throttling limits error. In order to continute the scan you need to wait 5 min")
+               print("[!] Encounter throttling limits error. In order to continute the scan you need to wait 5 min")
                response = pyip.inputMenu(['N', 'Y'],"Do you wish to wait 5 min ? or stop the scan here and recieve the script outcome till this part\nEnter Y for Yes, Continue the scan\nEnter N for No, Stop the scan \n")
                if response == 'Y':
                    print("[!] 5 min timer started")
