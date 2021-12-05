@@ -14,7 +14,7 @@ import os
 ENDPOINT_URL = '{}.blob.core.windows.net'
 CONTAINER_URL = '{}.blob.core.windows.net/{}/'
 EXTENSIONS = ["txt", "csv", "pdf", "docx", "xlsx"]
-
+STOP_SCAN_FLAG = "stop scan"
 
 def get_credentials():
     try:
@@ -62,22 +62,24 @@ def iterator_wrapper(iterator):
             yield (None,e_stop)
         except azure.core.exceptions.HttpResponseError as e_http:
             if e_http.status_code == 429:
-               print("[!] Encouter throttling limits error, waiting 5 min in order to continute the scan")
-               time.sleep(300)
+               print("[!] Encounter throttling limits error. In order to continute the scan you need to wait 5 min")
+               response = pyip.inputMenu(['N', 'Y'],"Do you wish to wait 5 min ? or stop the scan here and recieve the script outcome till this part\nEnter Y for Yes, Continue the scan\nEnter N for No, Stop the scan \n")
+               if response == 'Y':
+                   print("[!] 5 min timer started")
+                   time.sleep(300)
+               else:
+                   yield (STOP_SCAN_FLAG, None)
                if flag__httpresponse_code_429:
-                   # Means this current itearble object got throttling limit 2 times in a row, this condition has been added in order to prevent infint loop of throttling limit.
+                   # Means this current itearble object got throttling limit 2 times in a row , this condition has been added in order to prevent infint loop of throttling limit.
                    yield (None,e_http)
                else:
                    flag__httpresponse_code_429 = True
                    iterator = iterator_copy
-                   time.sleep(300)
                    continue
             else:
                 yield (None,e_http)
         except Exception as e:
-            yield (None,e)
-      
-
+            yield (None,e)      
 
 
 def check_storage_account(account_name, key):
@@ -86,6 +88,8 @@ def check_storage_account(account_name, key):
     public_containers = list()
 
     for cont,e in iterator_wrapper(containers):
+        if cont == STOP_SCAN_FLAG:
+            break
         if e :
             if type(e) is not StopIteration:   
                   print("\t\t[-] Could not scan the container of the account{} due to the error{}. skipping".format(account_name,e), flush=True) 
@@ -115,6 +119,8 @@ def check_subscription(tenant_id, tenant_name, sub_id, sub_name, creds):
     accounts_counter = 0
     for group in resource_groups:
         for item,e in iterator_wrapper(storage_client.storage_accounts.list_by_resource_group(group)):
+            if item == STOP_SCAN_FLAG:
+               break
             if e :
                 if type(e) is not StopIteration:   
                     print("\t\t[-] Could not access one of the resources of the group {} ,due to the error {} skipping the resource".format(group,e), flush=True) 
