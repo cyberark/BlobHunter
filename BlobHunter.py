@@ -52,30 +52,37 @@ def get_tenants_and_subscriptions(creds):
     return tenants_ids, tenants_names, subscriptions_ids, subscription_names
 
 def iterator_wrapper(iterator):
-    flag__httpresponse_code_429 = False
+    flag_httpresponse_code_429 = False
     while True:
         try:
             iterator,iterator_copy = itertools.tee(iterator)
             iterator_value = next(iterator)
             yield (iterator_value,None)
+            flag_httpresponse_code_429 = False
         except StopIteration as e_stop:
             yield (None,e_stop)
         except azure.core.exceptions.HttpResponseError as e_http:
             if e_http.status_code == 429:
-               print("[!] Encounter throttling limits error. In order to continute the scan you need to wait 5 min")
-               response = pyip.inputMenu(['N', 'Y'],"Do you wish to wait 5 min ? or stop the scan here and recieve the script outcome till this part\nEnter Y for Yes, Continue the scan\nEnter N for No, Stop the scan \n")
+               wait_time = int(e_http.response.headers["Retry-After"]) + 10
+               print("[!] Encounter throttling limits error. In order to continue the scan, you need to wait {} min".format(wait_time) ,flush=True)
+               response = pyip.inputMenu(['N', 'Y'],"Do you wish to wait {} min ? or stop the scan here and recieve the script outcome till this part\nEnter Y for Yes, Continue the scan\nEnter N for No, Stop the scan \n".format(wait_time))              
+             
                if response == 'Y':
-                   print("[!] 5 min timer started")
-                   time.sleep(300)
+                   print("[!] {} min timer started".format(wait_time), flush=True)
+                   time.sleep(wait_time)
                else:
                    yield (STOP_SCAN_FLAG, None)
-               if flag__httpresponse_code_429:
-                   # Means this current itearble object got throttling limit 2 times in a row , this condition has been added in order to prevent infint loop of throttling limit.
+           
+               if flag_httpresponse_code_429:
+                   # This means this current iterable object got throttling limit 2 times in a row, this condition has been added in order to prevent an infinite loop of throttling limit.
+                   print("[!] The current object we have been trying to access has triggered throttling limit error 2 times in a row, skipping this object ", flush=True)
+                   flag_httpresponse_code_429 = False
                    yield (None,e_http)
                else:
-                   flag__httpresponse_code_429 = True
+                   flag_httpresponse_code_429 = True
                    iterator = iterator_copy
                    continue
+                
             else:
                 yield (None,e_http)
         except Exception as e:
@@ -85,15 +92,15 @@ def iterator_wrapper(iterator):
 def check_storage_account(account_name, key):
     blob_service_client = BlobServiceClient(ENDPOINT_URL.format(account_name), credential=key)
     containers = blob_service_client.list_containers(timeout=15)
-    public_containers = list()
+    public_containers = list() 
 
     for cont,e in iterator_wrapper(containers):
         if cont == STOP_SCAN_FLAG:
             break
         if e :
             if type(e) is not StopIteration:   
-                  print("\t\t[-] Could not scan the container of the account{} due to the error{}. skipping".format(account_name,e), flush=True) 
-                  continue
+                print("\t\t[-] Could not scan the container of the account{} due to the error{}. skipping".format(account_name,e), flush=True) 
+                continue
             else:
                 break
         if cont.public_access is not None:
@@ -138,12 +145,12 @@ def check_subscription(tenant_id, tenant_name, sub_id, sub_name, creds):
                 storage_keys = storage_client.storage_accounts.list_keys(group, account)
                 storage_keys = {v.key_name: v.value for v in storage_keys.keys}
                 group_to_names_dict[group][account] = storage_keys['key1']
-
-            except azure.core.exceptions.HttpResponseError:
+            except azure.core.exceptions.HttpResponseError as e:
                 print("\t\t[-] User do not have permissions to retrieve storage accounts keys in the given"
                       " subscription", flush=True)
                 print("\t\t    Can not scan storage accounts", flush=True)
                 return
+                
 
     output_list = list()
 
