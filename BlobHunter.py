@@ -15,9 +15,19 @@ from src.file_processing import write_csv, delete_csv
 from src.logo import print_logo
 
 
-def get_credentials():
-    username = cli_arguments.username
-    if not username:
+def get_credentials() -> AzureCliCredential:
+    credentials = None
+    if cli_arguments.app_id and cli_arguments.app_secret and cli_arguments.tenant:
+        username = subprocess.check_output(f"az login --service-principal "
+                                           f"-u {cli_arguments.app_id} "
+                                           f"-p {cli_arguments.app_secret} "
+                                           f"--tenant {cli_arguments.tenant}",
+                                           shell=True,
+                                           stderr=subprocess.DEVNULL).decode("utf-8")
+        credentials = AzureCliCredential()
+    if cli_arguments.auto and not credentials:
+        raise ConnectionError('Can not log in using provided credentials')
+    else:
         try:
             username = subprocess.check_output("az account show --query user.name", shell=True,
                                                stderr=subprocess.DEVNULL).decode("utf-8")
@@ -26,9 +36,9 @@ def get_credentials():
             subprocess.check_output("az login", shell=True, stderr=subprocess.DEVNULL)
             username = subprocess.check_output("az account show --query user.name", shell=True,
                                                stderr=subprocess.DEVNULL).decode("utf-8")
-
+        credentials = AzureCliCredential()
     print("[+] Logged in as user {}".format(username.replace('"', '').replace("\n", '')), flush=True)
-    return AzureCliCredential()
+    return credentials
 
 
 def get_tenants_and_subscriptions(creds):
