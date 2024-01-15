@@ -1,8 +1,8 @@
-azure-common==1.1.26
-azure-core==1.10.0
-azure-identity==1.5.0
-azure-mgmt-core==1.2.2
-azure-mgmt-resource==15.0.0
-azure-mgmt-storage==16.0.0
-azure-storage-blob==12.6.0
+azure-common==1.1.28
+azure-core==1.29.6
+azure-identity==1.15.0
+azure-mgmt-core==1.4.0
+azure-mgmt-resource==23.0.1
+azure-mgmt-storage==21.1.0
+azure-storage-blob==12.19.0
 pyinputplus==0.2.12
