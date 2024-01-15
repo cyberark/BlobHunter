@@ -4,7 +4,7 @@ from datetime import date
 
 def create_parser():
     parser = argparse.ArgumentParser(description='The AWS Cloud Post Exploitation framework')
-    parser.add_argument('-a', '--app-id', '--app_id', type=str, default=None,
+    parser.add_argument('-i', '--app-id', '--app_id', type=str, default=None,
                         help="Azure App id")
     parser.add_argument('-s', '--app-secret', type=str, default=None,
                         help="Azure app secret")
