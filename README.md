@@ -3,8 +3,7 @@
 # BlobHunter
 
 An opensource tool for scanning Azure blob storage accounts for publicly opened blobs.  
-BlobHunter is a part of  "Hunting Azure Blobs Exposes Millions of Sensitive Files" research:  
-https://www.cyberark.com/resources/threat-research-blog/hunting-azure-blobs-exposes-millions-of-sensitive-files  
+BlobHunter is a part of [Hunting Azure Blobs Exposes Millions of Sensitive Files](https://www.cyberark.com/resources/threat-research-blog/hunting-azure-blobs-exposes-millions-of-sensitive-files) research.  
   
 ## Overview
 
